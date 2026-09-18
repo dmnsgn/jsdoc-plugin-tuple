@@ -1,0 +1,53 @@
+{
+  "name": "jsdoc-plugin-tuple",
+  "version": "1.0.0",
+  "description": "A JSDoc plugin adding support for TypeScript tuple types and index signatures.",
+  "keywords": [
+    "jsdoc",
+    "jsdoc-plugin",
+    "plugin",
+    "typescript",
+    "tuple",
+    "types",
+    "documentation"
+  ],
+  "homepage": "https://github.com/dmnsgn/jsdoc-plugin-tuple",
+  "bugs": "https://github.com/dmnsgn/jsdoc-plugin-tuple/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmnsgn/jsdoc-plugin-tuple.git"
+  },
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://paypal.me/dmnsgn"
+    },
+    {
+      "type": "individual",
+      "url": "https://commerce.coinbase.com/checkout/56cbdf28-e323-48d8-9c98-7019e72c97f3"
+    }
+  ],
+  "license": "MIT",
+  "author": "Damien Seguin (https://github.com/dmnsgn)",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "main": "./index.js",
+  "types": "./types/index.d.ts",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "npm@10.5.1",
+  "devDependencies": {
+    "jsdoc": "^4.0.5",
+    "jsdoc-parse": "^6.2.5"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "type": "commonjs"
+}
