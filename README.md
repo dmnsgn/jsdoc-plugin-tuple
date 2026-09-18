@@ -70,7 +70,151 @@ TypeScript itself reads the original source, so generated type definitions are u
 
 <!-- api-start -->
 
-Auto-generated API content.
+<a name="module_jsdoc-plugin-tuple"></a>
+
+## jsdoc-plugin-tuple
+
+Adds support for TypeScript tuple types and index signatures to JSDoc.
+
+JSDoc parses type expressions with catharsis, whose grammar has no notion of
+tuples: `{[number, number]}` is a hard parse error. Tuples are quoted into
+string literal types, which catharsis does accept, then unquoted again on the
+resulting doclets so documentation renders the original syntax.
+
+- [jsdoc-plugin-tuple](#module_jsdoc-plugin-tuple)
+  - [~CLOSERS](#module_jsdoc-plugin-tuple..CLOSERS)
+  - [~ARRAY_SUFFIX](#module_jsdoc-plugin-tuple..ARRAY_SUFFIX)
+  - [~TYPE_TAG](#module_jsdoc-plugin-tuple..TYPE_TAG)
+  - [~INDEX_SIGNATURE](#module_jsdoc-plugin-tuple..INDEX_SIGNATURE)
+  - [~TYPED_LISTS](#module_jsdoc-plugin-tuple..TYPED_LISTS)
+  - [~handlers](#module_jsdoc-plugin-tuple..handlers)
+  - [~findClosing()](#module_jsdoc-plugin-tuple..findClosing)
+  - [~normalizeWhitespace()](#module_jsdoc-plugin-tuple..normalizeWhitespace)
+  - [~transformRecord()](#module_jsdoc-plugin-tuple..transformRecord)
+  - [~transformComment(comment)](#module_jsdoc-plugin-tuple..transformComment) ⇒ <code>string</code>
+  - [~matchEncodedTuple()](#module_jsdoc-plugin-tuple..matchEncodedTuple)
+  - [~restoreTypeName(name)](#module_jsdoc-plugin-tuple..restoreTypeName) ⇒ <code>string</code>
+  - [~restoreDoclet(doclet)](#module_jsdoc-plugin-tuple..restoreDoclet) ⇒ <code>object</code>
+
+<a name="module_jsdoc-plugin-tuple..CLOSERS"></a>
+
+### jsdoc-plugin-tuple~CLOSERS
+
+Closing character for each bracket pair tracked while scanning.
+
+**Kind**: inner constant of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..ARRAY_SUFFIX"></a>
+
+### jsdoc-plugin-tuple~ARRAY\_SUFFIX
+
+A "[" directly after one of these belongs to an array suffix (`number[]`) or
+an indexed access (`Foo["bar"]`), never to a tuple.
+
+**Kind**: inner constant of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..TYPE_TAG"></a>
+
+### jsdoc-plugin-tuple~TYPE\_TAG
+
+A tag whose type expression opens on the same line, eg. `@param {`.
+
+**Kind**: inner constant of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..INDEX_SIGNATURE"></a>
+
+### jsdoc-plugin-tuple~INDEX\_SIGNATURE
+
+`[key: string]: number`, the only index signature shape with a JSDoc
+equivalent.
+
+**Kind**: inner constant of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..TYPED_LISTS"></a>
+
+### jsdoc-plugin-tuple~TYPED\_LISTS
+
+Doclet properties holding a list of typed items.
+
+**Kind**: inner constant of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..handlers"></a>
+
+### jsdoc-plugin-tuple~handlers
+
+JSDoc plugin event handlers.
+
+**Kind**: inner constant of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..findClosing"></a>
+
+### jsdoc-plugin-tuple~findClosing()
+
+Index of the bracket closing the one at `start`, or -1.
+
+Uses a stack rather than a counter so that the ">" of an arrow type (`(a:
+number) => void`) is not mistaken for the end of a type application. Escapes
+are skipped so that a tuple survives both forms it is seen in: quoted in the
+comment, and unquoted by catharsis on the doclet.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..normalizeWhitespace"></a>
+
+### jsdoc-plugin-tuple~normalizeWhitespace()
+
+Flattens a tuple written across several comment lines onto one line.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..transformRecord"></a>
+
+### jsdoc-plugin-tuple~transformRecord()
+
+Maps an index signature to its JSDoc equivalent, or transforms the members of
+a plain record type. Mapped types (`{[K in keyof T]: V}`) have no equivalent
+and are left for JSDoc to report.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..transformComment"></a>
+
+### jsdoc-plugin-tuple~transformComment(comment) ⇒ <code>string</code>
+
+Rewrites the tuple and index signature types of a JSDoc comment into
+equivalents JSDoc can parse.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+**Returns**: <code>string</code> - The rewritten comment.
+
+| Param   | Type                | Description                                        |
+| ------- | ------------------- | -------------------------------------------------- |
+| comment | <code>string</code> | The raw comment, as passed to `jsdocCommentFound`. |
+
+<a name="module_jsdoc-plugin-tuple..matchEncodedTuple"></a>
+
+### jsdoc-plugin-tuple~matchEncodedTuple()
+
+Start and end of the encoded tuple opening at `index`, or null.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+<a name="module_jsdoc-plugin-tuple..restoreTypeName"></a>
+
+### jsdoc-plugin-tuple~restoreTypeName(name) ⇒ <code>string</code>
+
+Unquotes the tuples of a single type name, eg. `Array.<"[number, number]">`.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+**Returns**: <code>string</code> - The name with its tuples restored.
+
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| name  | <code>string</code> | A doclet type name. |
+
+<a name="module_jsdoc-plugin-tuple..restoreDoclet"></a>
+
+### jsdoc-plugin-tuple~restoreDoclet(doclet) ⇒ <code>object</code>
+
+Restores the tuple syntax of a doclet in place, so documentation shows what
+was written rather than the quoted form JSDoc parsed.
+
+**Kind**: inner method of [<code>jsdoc-plugin-tuple</code>](#module_jsdoc-plugin-tuple)
+**Returns**: <code>object</code> - The same doclet.
+
+| Param  | Type                | Description                           |
+| ------ | ------------------- | ------------------------------------- |
+| doclet | <code>object</code> | The doclet, as passed to `newDoclet`. |
 
 <!-- api-end -->
 

@@ -30,6 +30,7 @@
   "license": "MIT",
   "author": "Damien Seguin (https://github.com/dmnsgn)",
   "sideEffects": false,
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
@@ -38,16 +39,15 @@
   },
   "main": "./index.js",
   "types": "./types/index.d.ts",
-  "engines": {
-    "node": ">=22.0.0"
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
   },
-  "packageManager": "npm@10.5.1",
   "devDependencies": {
     "jsdoc": "^4.0.5",
     "jsdoc-parse": "^6.2.5"
   },
-  "scripts": {
-    "test": "node --test test/*.test.mjs"
-  },
-  "type": "commonjs"
+  "packageManager": "npm@10.5.1",
+  "engines": {
+    "node": ">=22.0.0"
+  }
 }
